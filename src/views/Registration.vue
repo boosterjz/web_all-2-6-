@@ -1,13 +1,17 @@
 <template>
+  <div>
 
+  </div>
 </template>
 
 <script>
 export default {
-  name: "Registration"
+  name: "Registration",
 }
 </script>
 
 <style scoped>
-
+.red-background {
+  background-color: red;
+}
 </style>
