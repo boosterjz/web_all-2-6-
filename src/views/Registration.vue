@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Registration",
   data: function() {
@@ -37,7 +39,16 @@ export default {
   },
   methods: {
     onClick() {
-
+      axios.post("http://localhost:8080/User/Register", {
+        email: this.login,
+        password: this.password,
+        confirmPassword: this.passwordConfirm
+      }).then((response) => {
+        sessionStorage.setItem("accessToken", response.data.accessToken);
+        sessionStorage.setItem("email", response.data.email);
+        sessionStorage.setItem("userId", response.data.userId);
+        this.$router.push({name: "Home"});
+      })
     }
   }
 }

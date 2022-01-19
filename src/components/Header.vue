@@ -7,8 +7,12 @@
           Единая справочная<br>
           +7 (4722) 50-48-48
         </span>
-        <router-link :to="{ name: 'Auth' }" class="auth">Вход</router-link>
-        <router-link :to="{ name: 'Registration' }" class="auth">Регистрация</router-link>
+        <a href="#" v-if="isAuthorized()" class="auth">{{ email }}</a>
+        <a href="" v-if="isAuthorized()" v-on:click="logOut" class="auth">Выйти</a>
+        <div v-else>
+          <router-link :to="{ name: 'Auth' }" class="auth">Вход</router-link>
+          <router-link :to="{ name: 'Registration' }" class="auth">Регистрация</router-link>
+        </div>
         <img :src="require('@/assets/img/geolocation_logo.svg')" alt="Иконка адреса" class="header_icon_geo">
         Адрес:<br>
         улица Некрасова, дом 8/9, Белгород, 308007
@@ -36,6 +40,25 @@
 <script>
 export default {
   name: "Header",
+  data: function() {
+    return {
+      email: ""
+    }
+  },
+  methods: {
+    isAuthorized() {
+      return sessionStorage.getItem("accessToken") !== null;
+    },
+    logOut() {
+      sessionStorage.removeItem("accessToken");
+      sessionStorage.removeItem("email");
+      sessionStorage.removeItem("userId");
+      this.$router.push({ name: "Home" });
+    }
+  },
+  mounted() {
+    this.email = sessionStorage.getItem("email");
+  }
 }
 </script>
 

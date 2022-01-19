@@ -23,7 +23,7 @@ services:
       - "8080:80"
     restart: unless-stopped
     depends_on:
-      - db
+      - database
     networks:
       - web-network
 
