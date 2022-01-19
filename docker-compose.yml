@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  database:
+    container_name: database
+    image: postgres:14
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_USER: boosterjz
+      POSTGRES_DB: database
+    ports:
+      - "5432:5432"
+    networks:
+      - web-network
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+  backend:
+    container_name: backend
+    build: ./BackendApp
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - web-network
+
+  frontend:
+    container_name: frontend
+    build: .
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    depends_on:
+      - backend
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    networks:
+      - web-network
+
+networks:
+  web-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
