@@ -8,6 +8,7 @@
           +7 (4722) 50-48-48
         </span>
         <router-link :to="{ name: 'Auth' }" class="auth">Вход</router-link>
+        <router-link :to="{ name: 'Registration' }" class="auth">Регистрация</router-link>
         <img :src="require('@/assets/img/geolocation_logo.svg')" alt="Иконка адреса" class="header_icon_geo">
         Адрес:<br>
         улица Некрасова, дом 8/9, Белгород, 308007
