@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "Appointment",
   data: function() {
@@ -35,7 +37,14 @@ export default {
   },
   methods: {
     onClick() {
-
+      axios.post("http://localhost:8080/api/Appointment", {
+        name: this.name,
+        contact: this.contact,
+        message: this.message
+      }).then((response) => {
+        console.log(response);
+        this.$router.push({name: "Home"});
+      })
     }
   }
 }
